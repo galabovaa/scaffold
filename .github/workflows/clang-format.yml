@@ -1,0 +1,15 @@
+name: test-clang-format
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: DoozyX/clang-format-lint-action@v0.5
+      with:
+        source: './scaffold/ ./component_test/ ./dev_presolve/'
+        extensions: 'h,cpp,c,hpp'
+        clangFormatVersion: 9
