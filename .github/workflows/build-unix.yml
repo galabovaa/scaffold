@@ -41,6 +41,7 @@ jobs:
       shell: bash
       run: |
         cd $HOME/HiGHS/build
+        ls 
         cmake --build . 
 #        cmake --build . --config $BUILD_TYPE
 
