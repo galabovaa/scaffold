@@ -69,12 +69,12 @@ jobs:
         cd $HOME/HiGHS/build
         ctest
 
+    # Here the default is just hello. Component test below.  
     - name: Scaffold Build
       run: |
         cd $HOME/HiGHS
         cp ${{github.workspace}}/scaffold/ .
         echo "add_subdirectory(scaffold) | tee -a $HOME/HiGHS/CMakeLists.txt
-      # Here the default is just hello. Component test below.  
         cd build
         cmake ..
         cmake --build .
