@@ -55,7 +55,7 @@ cp ${HIGHS_RUN_DIR}/build/Testing/Temporary/LastTest.log \
 
 # Then Scaffold and TestPresolve.
 rm ${HIGHS_RUN_DIR}/scaffold/ScaffoldMain.cpp
-cp ${CURRENT_DIR}/ScaffoldMain.cpp ${HIGHS_RUN_DIR}/scaffold/
+cp ${SCAFFOLD_DIR}/component_test/TestScaffoldMain.cpp ${HIGHS_RUN_DIR}/scaffold/ScaffoldMain.cpp
 
 echo "add_subdirectory(scaffold)" | tee -a ${HIGHS_RUN_DIR}/CMakeLists.txt
 

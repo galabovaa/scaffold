@@ -52,6 +52,7 @@ cp ${HIGHS_RUN_DIR}/build/Testing/Temporary/LastTest.log \
 # Copy relevant scaffold directories and edit main CMakeLists.txt of HiGHS.
 # First scaffold only.
 cp -r ${SCAFFOLD_DIR}/scaffold ${HIGHS_RUN_DIR}
+echo "" | tee -a ${HIGHS_RUN_DIR}/CMakeLists.txt
 echo "add_subdirectory(scaffold)" | tee -a ${HIGHS_RUN_DIR}/CMakeLists.txt
 
 cmake --build --parallel . | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
@@ -69,12 +70,14 @@ grep dev-presolve \
 # Then Scaffold and DevPresolve
 cp -r ${SCAFFOLD_DIR}/dev_presolve ${HIGHS_RUN_DIR}
 rm ${HIGHS_RUN_DIR}/scaffold/ScaffoldMain.cpp
-cp ${CURRENT_DIR}/ScaffoldMain.cpp ${HIGHS_RUN_DIR}/scaffold/
+
+cp ${SCAFFOLD_DIR}/dev_presolve/DevScaffoldMain.cpp ${HIGHS_RUN_DIR}/scaffold/ScaffoldMain.cpp
 
 # Had issue with linking of CMake when using add_subdir.
-# More modern CMake approach should fix that.
+# More modern CMake approach should fix that: added FAST_BUILD
 echo "add_subdirectory(dev_presolve)" | tee -a ${HIGHS_RUN_DIR}/CMakeLists.txt
 
+cd ${HIGHS_RUN_DIR}/build
 cmake .. | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
 
 cmake --build --parallel . | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
@@ -91,7 +94,7 @@ grep dev-presolve \
 
 # Dev Tests
 for file in ${TEST_DIR}/dev/*.mps; do
-    ${TMP_DIR}/${RUN_DIR}/install/bin/highs --time_limit=3000 ${file} |
+   ${HIGHS_RUN_DIR}/build/bin/highs --time_limit=3000 ${file} |
         tee -a ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_mps.log
 done
 grep dev-presolve ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_mps.log > \
