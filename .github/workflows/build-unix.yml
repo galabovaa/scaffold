@@ -42,7 +42,8 @@ jobs:
       run: |
         cd $HOME/HiGHS/build
         ls 
-        cmake --build . 
+        pwd
+        cmake ..
 #        cmake --build . --config $BUILD_TYPE
 
     - name: Test
