@@ -98,18 +98,19 @@ void printInfo(TestRunInfo& info, const bool desc) {
                  "x_rows,	x_cols, x_nnz"
               << std::endl;
   } else {
-    std::cout << "scaffold-run-test-presolve, " << info.name << ", " << info.optimal_objective << ", "
-              << info.objective << ", " << info.x_rows << ", " << info.x_cols
-              << ", " << info.x_nnz << std::endl;
+    std::cout << "scaffold-run-test-presolve, " << info.name << ", "
+              << info.optimal_objective << ", " << info.objective << ", "
+              << info.x_rows << ", " << info.x_cols << ", " << info.x_nnz
+              << std::endl;
   }
 }
 
 void testProblems() {
   TestRunInfo pr_25fv47("25fv47", 5.501846e+03, 99, 81, 304);
-  TestRunInfo pr_80bau3b{"80bau3b", 9.872242e+05,292,672,1279};
-  TestRunInfo pr_adlittle{"adlittle", 2.254950e+05,3,2,10};
-  TestRunInfo pr_afiro{"afiro", -4.647531e+02, 5,2,8};
-  TestRunInfo pr_etamacro{"etamacro", 9.872242e+05,81,161,573};
+  TestRunInfo pr_80bau3b{"80bau3b", 9.872242e+05, 292, 672, 1279};
+  TestRunInfo pr_adlittle{"adlittle", 2.254950e+05, 3, 2, 10};
+  TestRunInfo pr_afiro{"afiro", -4.647531e+02, 5, 2, 8};
+  TestRunInfo pr_etamacro{"etamacro", 9.872242e+05, 81, 161, 573};
 
   std::vector<TestRunInfo> problems;
   problems.push_back(pr_25fv47);
@@ -132,7 +133,7 @@ void testProblems() {
                      "on problem: "
                   << test_run.name << std::endl;
         // continue;
-        exit(2); // so ctest can fail.
+        exit(2);  // so ctest can fail.
       }
 
       // Making sure presolve is on (default).

@@ -14,7 +14,6 @@ void saveStats() {
 }
 
 void devPresolveHello() {
-
   // Print details.
   std::cout << "Dev - Presolve: Example method." << std::endl << std::endl;
 
