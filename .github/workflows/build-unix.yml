@@ -22,21 +22,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Cache
-      id: cache-highs
-      uses: actions/cache@v1
+    - name: Install dependencies
+      uses: ktmud/cached-dependencies@v1
       with:
-        path: HiGHS
-        key: ${{ runner.os }}-highs
+        run: |
+          git clone https://www.github.com/ERGO-Code/HiGHS.git
+          cmake -E make_directory ./HiGHS/build
+          cd ./HiGHS/build
+          ls
 
-    - name: Get HiGHS if not cached.
-      if:  steps.cached-dependencies.outputs.cache-hit != 'true'
-      run: |
-        cd $HOME
-        git clone https://www.github.com/ERGO-Code/HiGHS.git
-        cmake -E make_directory ./HiGHS/build
-       
-    
     - name: Build HiGHS release and debug
       shell: bash
       run: |
