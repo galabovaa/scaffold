@@ -20,14 +20,14 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
-    - name: Cached Dependencies
-      id: cached-dependencies
+    - name: Cache
+      id: cache-highs
       uses: actions/cache@v1
       with:
-        path: ./Dependencies
-        key: dependencies-highs-${{ matrix.os }}-package
+        path: HiGHS
+        key: ${{ runner.os }}-highs
 
     - name: Get HiGHS if not cached.
       if:  steps.cached-dependencies.outputs.cache-hit != 'true'
