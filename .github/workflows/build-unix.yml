@@ -44,7 +44,7 @@ jobs:
         ls 
         pwd
         cmake ..
-#        cmake --build . --config $BUILD_TYPE
+        cmake --build . 
 
     - name: Test
       working-directory: $HOME/HiGHS/build
