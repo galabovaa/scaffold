@@ -38,9 +38,9 @@ jobs:
        
     
     - name: Build HiGHS release and debug
-      working-directory: $HOME/HiGHS/build
       shell: bash
       run: |
+        cd $HOME/HiGHS/build
         cmake --build . 
 #        cmake --build . --config $BUILD_TYPE
 
