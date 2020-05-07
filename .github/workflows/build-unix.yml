@@ -25,8 +25,6 @@ jobs:
     - name: Install dependencies
       uses: actions/cache@v1
       with:
-
-      with:
         path: ./Dependencies
         key: dependencies-${{env.SCIP_VERSION}}-${{ matrix.os }}-package
 
