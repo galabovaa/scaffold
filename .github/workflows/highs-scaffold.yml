@@ -74,6 +74,7 @@ jobs:
         cd $HOME/HiGHS
         cp ${{github.workspace}}/scaffold/ .
         echo "add_subdirectory(scaffold) | tee -a $HOME/HiGHS/CMakeLists.txt
+      # Here the default is just hello. Component test below.  
         cd build
         cmake ..
         cmake --build .
@@ -85,15 +86,18 @@ jobs:
         cd $HOME/HiGHS/build
         ctest
     
-    - name: Scaffold Component Build
+    - name: Component Build
       run: |
         cd $HOME/HiGHS
         cp ${{github.workspace}}/component_test/ .
+        rm -f ./scaffold/ScaffoldMain.cpp
+        mv ./component_test/TestScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
+
         cd build
         cmake ..
         cmake --build .
       
-    - name: Scaffold Test
+    - name: Test
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
