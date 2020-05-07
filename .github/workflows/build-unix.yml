@@ -29,14 +29,20 @@ jobs:
         path: ./Dependencies
         key: dependencies-highs-${{ matrix.os }}-package
 
-    - name: HiGHS build master
+    - name: Get HiGHS if not cached.
+      if:  steps.cached-dependencies.outputs.cache-hit != 'true'
       run: |
         cd $HOME
         git clone https://www.github.com/ERGO-Code/HiGHS.git
         cmake -E make_directory ./HiGHS/build
-        cd ./HiGHS/build
+       
+    
+    - name: Build HiGHS release and debug
+      working-directory: $HOME/HiGHS/build
+      shell: bash
+      run: |
         cmake --build . 
-        cmake --build . --config $BUILD_TYPE
+#        cmake --build . --config $BUILD_TYPE
 
     - name: Test
       working-directory: $HOME/HiGHS/build
