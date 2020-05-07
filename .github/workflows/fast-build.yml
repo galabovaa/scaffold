@@ -1,4 +1,4 @@
-name: test-highs
+name: fast-build
 
 on: ["push", "pull_request"]
 
@@ -57,8 +57,8 @@ jobs:
     - name: Scaffold Build
       run: |
         cd $HOME/HiGHS
-        rm -rf ${{github.workspace}}/scaffold/ 
-        rm -rf ${{github.workspace}}/component_test/
+        rm -rf $HOME/HiGHS/scaffold/ 
+        rm -rf $HOME/HiGHS/component_test/
 
         cp -r ${{github.workspace}}/scaffold/ .
         echo "add_subdirectory(scaffold)" | tee -a $HOME/HiGHS/CMakeLists.txt
@@ -77,6 +77,7 @@ jobs:
       run: |
         cd $HOME/HiGHS
         cp -r ${{github.workspace}}/component_test/ .
+
         rm -f ./scaffold/ScaffoldMain.cpp
         mv ./component_test/TestScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
 
