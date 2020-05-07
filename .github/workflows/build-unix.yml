@@ -37,7 +37,8 @@ jobs:
         cd ./HiGHS/build
         ls
 
-    - name: Build HiGHS release and debug
+    # Release only, debug and platforms tested in ERGO-Code.
+    - name: Build HiGHS release 
       shell: bash
       run: |
         cd $HOME/HiGHS/build
@@ -45,12 +46,11 @@ jobs:
         pwd
         cmake ..
         cmake --build .
-      # cmake --build . --config DEBUG
 
     - name: Test
-      working-directory: $HOME/HiGHS/build
       shell: bash
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
+        cd $HOME/HiGHS/build
         ctest
