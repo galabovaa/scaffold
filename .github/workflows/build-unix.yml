@@ -54,28 +54,3 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
         ctest
-      #  ctest -C $BUILD_TYPE
-
-    - name: Fast build
-    # Then test whether the fast build succeeded and runs tests.
-    # (fast-build -> to be merged into master) 
-    # todo: add macos and windows
-    # os: [ubuntu-18.04,ubuntu-16.04,macos-10.15,windows-latest
-
-      run: |
-        cd $HOME
-        cmake -E make_directory ./HiGHS/build_fast
-        cd ./HiGHS/build_fast
-        cmake -DFAST_BUILD=ON ..
-        cmake --build . --config $BUILD_TYPE
-
-    # new (short ctest instances) todo: then + scaffold; then + component_test; then + dev-presolve)
-    # add as separate test instances in ctest, obviously.
-    # maybe add settings somehow to know which components? Like config?
-    - name: Test
-      working-directory: $HOME/HiGHS/build_fast
-      shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: |
-        ctest -C $BUILD_TYPE
