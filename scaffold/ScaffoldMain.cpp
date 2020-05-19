@@ -1,8 +1,7 @@
-
 #include <iostream>
 
 // Enable for component_test/
-// #include "../component_test/TestPresolve.hpp"
+#include "../component_test/TestPresolve.hpp"
 // Enable for dev-presolve/
 // #include "../dev_presolve/DevPresolveMethods.hpp"
 #include "../scaffold/ScaffoldMethods.hpp"
@@ -12,7 +11,7 @@ int main(int argc, char* argv[]) {
   scaffold::ScaffoldUtils::scaffoldHello();
 
   // Call test on presolve component.
-  // scaffold::test_presolve::linkComponent();
+ scaffold::test_presolve::linkComponent();
 
   // Enable for dev-presolve
   // Call test on presolve component.

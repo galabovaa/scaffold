@@ -64,6 +64,8 @@ std::string PresolveStatusToString(const HighsPresolveStatus status) {
       return "Reduced";
     case HighsPresolveStatus::ReducedToEmpty:
       return "ReducedToEmpty";
+    case HighsPresolveStatus::Timeout:
+      return "Timeout";
     case HighsPresolveStatus::NullError:
       return "NullError";
   }
