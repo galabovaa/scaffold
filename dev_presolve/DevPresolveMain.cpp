@@ -79,8 +79,7 @@ int main(int argc, char* argv[]) {
 
     if (vm.count("file")) {
       filenames.push_back(vm["file"].as<std::string>());
-      std::cout << "file:             " << filenames[0]
-                << '\n';
+      std::cout << "file:             " << filenames[0] << '\n';
     }
 
     if (vm.count("presolvers")) {
