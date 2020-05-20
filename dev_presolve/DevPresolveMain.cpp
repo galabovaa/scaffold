@@ -123,7 +123,11 @@ int main(int argc, char* argv[]) {
     // implemented in presolve yet.
   } catch (const error& ex) {
     std::cerr << ex.what() << '\n';
+    return 0;
   }
+
+  // Enable printing.
+  options.dev = true;
 
   // Run scaffold.
   if (filenames.size() == 1 && filenames[0] == "") {
