@@ -61,16 +61,16 @@ int main(int argc, char* argv[]) {
     desc.add_options()("help,h", "Help screen")(
         "file", value<std::string>()->default_value(""), "problem file")(
         "presolvers", value<std::string>()->default_value(""), "presolvers")(
+        "strategy", value<std::string>()->default_value(""), "strategy")(
         "max_iterations", value<int>()->default_value(0), "max iterations")(
-        "iterations_strategy", value<std::string>()->default_value("num_limit"),
-        "iterations strategy")("time_limit", value<double>()->default_value(-1),
-                               "time limit");
+        "time_limit", value<double>()->default_value(-1.0), "time limit");
 
     variables_map vm;
     store(parse_command_line(argc, argv, desc), vm);
     // notify(vm);
 
     std::string presolvers = "";
+    std::string strategy = "";
 
     if (vm.count("help")) {
       std::cout << desc << '\n';
@@ -87,19 +87,19 @@ int main(int argc, char* argv[]) {
       std::cout << "presolvers:       " << presolvers << '\n';
     }
 
+    if (vm.count("strategy")) {
+      strategy = vm["strategy"].as<std::string>();
+      std::cout << "strategy:       " << strategy << '\n';
+    }
+
     if (vm.count("max_iterations")) {
       options.iteration_strategy = "num_limit";
       options.max_iterations = vm["max_iterations"].as<int>();
       std::cout << "max_iterations:   " << options.max_iterations << '\n';
     }
 
-    if (vm.count("iterations_trategy")) {
-      options.iteration_strategy = vm["iterations_trategy"].as<std::string>();
-      std::cout << "iteration_strategy: " << options.iteration_strategy << '\n';
-    }
-
-    if (vm.count("time_limit ")) {
-      options.time_limit = vm[""].as<double>();
+    if (vm.count("time_limit")) {
+      options.time_limit = vm["time_limit"].as<double>();
       std::cout << "time_limit : " << options.time_limit << '\n';
     }
 
@@ -118,6 +118,8 @@ int main(int argc, char* argv[]) {
         options.order.push_back(Presolver::kMainDominatedCols);
       }
     }
+
+    if (strategy != "") options.iteration_strategy = strategy;
 
     // todo: options.iteration strategy ignored for the moment since it is not
     // implemented in presolve yet.
