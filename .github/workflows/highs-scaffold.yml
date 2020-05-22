@@ -1,4 +1,4 @@
-name: test-highs
+name: highs-scaffold
 
 on: ["push", "pull_request"]
 
@@ -34,7 +34,9 @@ jobs:
         cd $HOME
         git clone https://www.github.com/ERGO-Code/HiGHS.git
         cmake -E make_directory ./HiGHS/build
-        cd ./HiGHS/build
+        cd ./HiGHS
+        git checkout dev-option
+        cd ./build_fast
         ls
 
     # Release only, debug and platforms tested in ERGO-Code.
