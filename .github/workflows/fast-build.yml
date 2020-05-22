@@ -80,7 +80,6 @@ jobs:
 
         rm -f ./scaffold/ScaffoldMain.cpp
         mv ./component_test/TestScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
-
         cd build_fast
         cmake -DFAST_BUILD=ON ..
         cmake --build .

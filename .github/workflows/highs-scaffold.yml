@@ -75,6 +75,7 @@ jobs:
         cd $HOME/HiGHS
         cp -r ${{github.workspace}}/scaffold/ .
         echo "add_subdirectory(scaffold)" | tee -a $HOME/HiGHS/CMakeLists.txt
+        cat $HOME/HiGHS/CMakeLists.txt
         cd build
         cmake ..
         cmake --build .
