@@ -75,6 +75,12 @@ jobs:
         cd $HOME/HiGHS/build_dev
         ctest
     
+    - name: Install dependencies on ubuntu
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install libboost-dev libboost-iostreams-dev libboost-program-options-dev libboost-serialization-dev
+
     - name: Dev Build
       run: |
         cd $HOME/HiGHS
