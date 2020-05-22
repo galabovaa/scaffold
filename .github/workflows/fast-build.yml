@@ -94,3 +94,22 @@ jobs:
         cd $HOME/HiGHS/build_fast
         ctest
     
+    - name: dev-presolve build
+      run: |
+        cd $HOME/HiGHS
+        cp -r ${{github.workspace}}/dev_presolve/ .
+
+        rm -f ./scaffold/ScaffoldMain.cpp
+        mv ./dev_presolve/DevScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
+
+        cd build_fast
+        cmake -DFAST_BUILD=ON ..
+        cmake --build .
+      
+    - name: Test
+      # Execute tests defined by the CMake configuration.  
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: |
+        cd $HOME/HiGHS/build_fast
+        ctest
+    
