@@ -1,4 +1,4 @@
-name: fast-build
+name: dev-test
 
 on: ["push", "pull_request"]
 
@@ -61,6 +61,7 @@ jobs:
         cd $HOME/HiGHS
         rm -rf $HOME/HiGHS/scaffold/ 
         rm -rf $HOME/HiGHS/component_test/
+        rm -rf $HOME/HiGHS/dev_presolve/
 
         cp -r ${{github.workspace}}/scaffold/ .
         printf "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
@@ -81,6 +82,7 @@ jobs:
         cp -r ${{github.workspace}}/dev_presolve/ .
         rm -f ./scaffold/ScaffoldMain.cpp
         mv ./dev_presolve/DevScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
+        printf "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_fast
         cmake -DFAST_BUILD=ON ..
         cmake --build .
@@ -96,8 +98,7 @@ jobs:
       run: |
         cd $HOME/HiGHS
         cp -r ${{github.workspace}}/dev_presolve/ .
-        rm -f ./scaffold/ScaffoldMain.cpp
-        mv ./dev_presolve/DevScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
+        printf "\nadd_subdirectory(dev_presolve)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_fast
         cmake ..
         cmake --build .
