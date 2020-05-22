@@ -63,7 +63,7 @@ jobs:
         rm -rf $HOME/HiGHS/component_test/
         rm -rf $HOME/HiGHS/dev_presolve/
 
-        cp -r ${{github.workspace}}/scaffold/ .
+        mv ${{github.workspace}}/scaffold/ .
         printf "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_dev
         cmake -DFAST_BUILD=ON ..
@@ -79,10 +79,8 @@ jobs:
     - name: Dev Build
       run: |
         cd $HOME/HiGHS
-        cp -r ${{github.workspace}}/dev_presolve/ .
-        rm -f ./scaffold/ScaffoldMain.cpp
-        mv ./dev_presolve/DevScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
-        printf "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
+        mv ${{github.workspace}}/dev_presolve/ .
+        printf "\nadd_subdirectory(dev_presolve)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_dev
         cmake -DFAST_BUILD=ON ..
         cmake --build .
@@ -97,9 +95,8 @@ jobs:
     - name: Dev Build (non-fast)
       run: |
         cd $HOME/HiGHS
-        cp -r ${{github.workspace}}/dev_presolve/ .
-        printf "\nadd_subdirectory(dev_presolve)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
-        cd build_dev
+        mkdir build_non_fast
+        cd build_non_fast
         cmake ..
         cmake --build .
       
@@ -107,6 +104,6 @@ jobs:
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
-        cd $HOME/HiGHS/build_dev
+        cd $HOME/HiGHS/build_non_fast
         ctest
     
