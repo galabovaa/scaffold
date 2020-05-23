@@ -1,6 +1,7 @@
 
 #include <boost/program_options.hpp>
 #include <iostream>
+#include <sstream>
 
 #include "DevPresolveMethods.hpp"
 #include "ScaffoldMethods.hpp"
@@ -9,7 +10,7 @@
 
 using namespace boost::program_options;
 
-const std::string adlittle = HIGHS_DIR + "/check/instances/adlittle.mps";
+const std::string adlittle = "/check/instances/adlittle.mps";
 
 void print(const PresolveComponentInfo& info) {
   std::cout << info.n_cols_removed << std::endl;
@@ -133,7 +134,10 @@ int main(int argc, char* argv[]) {
 
   // Run scaffold.
   if (filenames.size() == 1 && filenames[0] == "") {
-    int result = scaffold_main(adlittle, options);
+    std::stringstream ss;
+    ss << HIGHS_DIR << adlittle;
+    std::string s = ss.str();
+    int result = scaffold_main(s, options);
     return result;
   }
 
