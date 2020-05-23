@@ -32,7 +32,7 @@ jobs:
       if: steps.cached-dependencies.outputs.cache-hit != 'true'
       run: |
         cd $HOME
-        git clone https://www.github.com/galabovaa/HiGHS.git
+        git clone https://www.github.com/ERGO-Code/HiGHS.git
         cmake -E make_directory ./HiGHS/build
         cd ./HiGHS
         git checkout jl
