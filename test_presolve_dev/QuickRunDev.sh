@@ -19,7 +19,7 @@ cd ${TMP_DIR}
 # keep code for ref
 #RUN_DIR=$(date +%Y%m%d_%H%M%S)
 # don't keep code for ref
-RUN_DIR="$(date +%Y%m%d_)${BRANCH}"
+RUN_DIR="quick_run_dev$(date +%Y%m%d_)${BRANCH}"
 
 mkdir ${RUN_DIR}
 
@@ -37,15 +37,10 @@ git checkout ${BRANCH}
 rm -rf build
 mkdir build
 cd build
-cmake .. | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
+cmake -DFAST_BUILD=ON .. | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
 
 cmake --build --parallel . | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
 make -j | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
-ctest | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
-
-# Save log.
-cp ${HIGHS_RUN_DIR}/build/Testing/Temporary/LastTest.log \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_H_only.log
 
 # Then Scaffold.
 
@@ -91,3 +86,11 @@ cd ${TMP_DIR}
 grep dev-presolve \
     ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_presolve.log > \
     ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_presolve_reduction_counts.log
+
+# Dev Tests
+for file in ~/dev/*.mps; do
+   ${HIGHS_RUN_DIR}/build/app/highs --time_limit=3000 ${file} |
+        tee -a ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_mps.log
+done
+grep dev-presolve ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_mps.log > \
+    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_mps_reduction_counts.log
