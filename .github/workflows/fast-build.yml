@@ -35,7 +35,7 @@ jobs:
         git clone https://www.github.com/ERGO-Code/HiGHS.git
         cmake -E make_directory ./HiGHS/build_fast
         cd ./HiGHS
-        git checkout jl 
+        git checkout kkt-check
         cd ./build_fast
         ls
 
