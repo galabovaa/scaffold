@@ -61,7 +61,7 @@ jobs:
         rm -rf $HOME/HiGHS/component_test/
 
         cp -r ${{github.workspace}}/scaffold/ .
-        echo "add_subdirectory(scaffold)" | tee -a $HOME/HiGHS/CMakeLists.txt
+        echo "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_fast
         cmake -DFAST_BUILD=ON ..
         cmake --build .
