@@ -5,8 +5,14 @@
 
 #include <iostream>
 
+#include "presolve/HPreData.h"
+
 namespace scaffold {
 namespace dev_presolve {
+
+void initPresolveDev(presolve::PresolveStats& stats) {
+  std::cout << "Init Presolve form DevPresolveMethods" << std::endl;
+}
 
 void saveStats() {
   std::cout << "stats" << std::endl;

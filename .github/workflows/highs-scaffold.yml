@@ -1,4 +1,4 @@
-name: test-highs
+name: highs-scaffold
 
 on: ["push", "pull_request"]
 
@@ -34,7 +34,8 @@ jobs:
         cd $HOME
         git clone https://www.github.com/ERGO-Code/HiGHS.git
         cmake -E make_directory ./HiGHS/build
-        cd ./HiGHS/build
+        cd ./HiGHS
+        cd ./build
         ls
 
     # Release only, debug and platforms tested in ERGO-Code.
@@ -74,7 +75,8 @@ jobs:
       run: |
         cd $HOME/HiGHS
         cp -r ${{github.workspace}}/scaffold/ .
-        echo "add_subdirectory(scaffold)" | tee -a $HOME/HiGHS/CMakeLists.txt
+        printf "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
+        cat $HOME/HiGHS/CMakeLists.txt
         cd build
         cmake ..
         cmake --build .
