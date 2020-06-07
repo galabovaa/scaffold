@@ -11,7 +11,7 @@ Containts extended tests and problem sets, as well as a log of performance of pr
 
 ### Unit tests
 
-Catch2 has been updated and it is looking even nicer and simpler than before, so we will continue to use it for unit tests. GoogleTest unit tests have too large a machinery around them.
+Catch2 has been updated and it is looking even nicer and simpler than before, but https://github.com/onqtam/doctest has better feedback from devs. GoogleTest unit tests have too large a machinery around them.
 
 ### Extended instance tests
 
@@ -32,10 +32,9 @@ The division of folders in scaffold is such that it allows for linking dev code 
 - scaffold/scaffold/
   contains scaffold utilities and defines the executable which will run all component tests we want to run on HiGHS
   dev executables are defined in their own scaffold root subdirecties
-- scaffold/unit_test/
-  can have multiple targets but not a single executable with two versions of Catch2. (Later, update in Catch so need to move the current unit tests out first)
 
-dev-presolve/ is an example of use of the scaffold for development. It is an example of a folder which can exist locally (or on any git branch of this repo) which can be copied into HiGHS for development or test of that component.
+
+dev-presolve/ is an example of use of the scaffold for development. It is an example of a folder which can exist locally (or on any git branch of this repo) which can be copied into HiGHS for development or test of that component (along with the scaffold/ dir).
 
 ### Performance Log
 
