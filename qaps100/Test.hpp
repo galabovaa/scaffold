@@ -12,7 +12,7 @@
 namespace scaffold {
 namespace test{
 
-const std::string kFolder ="/Users/mac/test_pr/mps_da";
+const std::string kFolder ="/Users/mac/test_pr/mps_da/";
 
 struct TestRunInfo {
   TestRunInfo(std::string xname, double x_optimal_obj)
@@ -80,7 +80,7 @@ void testProblems() {
       Highs highs;
       HighsStatus highs_status = highs.readModel(file);
 
-      if (highs_status != HighsStatus::OK) {
+      if (highs_status != HighsStatus::kOk) {
         std::cout << "TestPresolve:: Highs readModel returned Warning or Error "
                      "on problem: "
                   << test_run.name << std::endl;
@@ -92,7 +92,7 @@ void testProblems() {
       highs.setHighsOptionValue("presolve", "on");
       HighsStatus run_status = highs.run();
 
-      if (run_status == HighsStatus::OK) {
+      if (run_status == HighsStatus::kOk) {
         // Load TestRunInfo
         loadAndCheckTestRunInfo(highs, test_run);
 
@@ -112,13 +112,14 @@ void testProblems() {
   return;
 }
 
-void testPresolve() {
+void test() {
   testInit();
   testProblems();
 }
 
 void linkComponent() {
   std::cout << "link component" << std::endl;
+  test();
   return;
 }
 
