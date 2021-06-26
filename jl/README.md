@@ -1,13 +1,7 @@
 # Calling HiGHS from Julia
-IG May 2020
-atm locally
+IG June 2021
 
-jump-dev/HiGHS.jl 
-  uses the C interface. 
+jump-dev/HiGHS.jl
+  uses the C interface.
 
-Instead it is possible to call C++ directly. 
-
-For languages which allow it this should be the case. 
-
-(Julia & Java)
-
+in progress. Mip and Qp solver added to the HiGHS_jll, version 0.3.1 pre-release.
