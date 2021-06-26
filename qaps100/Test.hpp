@@ -5,22 +5,24 @@
 
 #include <iostream>
 #include <sstream>
+#include <chrono>
 
 #include "Highs.h"
 #include "ScaffoldMethods.hpp"
 
 namespace scaffold {
-namespace test{
+namespace test {
 
-const std::string kFolder ="/Users/mac/test_pr/mps_da/";
+const std::string kFolder = "/Users/mac/test_pr/mps_da/";
 
 struct TestRunInfo {
   TestRunInfo(std::string xname, double x_optimal_obj)
       : name(std::move(xname)), optimal_objective(x_optimal_obj) {}
 
   TestRunInfo(std::string xname, double xobj, int time)
-      : name(std::move(xname)),
-        objective(xobj) {time = time;}
+      : name(std::move(xname)), objective(xobj) {
+    time = time;
+  }
 
   std::string name;
   double optimal_objective;
@@ -44,6 +46,7 @@ void testInit() {
 }
 
 void loadAndCheckTestRunInfo(const Highs& highs, TestRunInfo& info) {
+  info.objective = highs.getObjectiveValue();
 }
 
 void printInfo(TestRunInfo& info, const bool desc) {
@@ -59,10 +62,10 @@ void printInfo(TestRunInfo& info, const bool desc) {
 
 void testProblems() {
   TestRunInfo pr_25fv47("25fv47", 5.501846e+03);
-  TestRunInfo pr_80bau3b{"80bau3b", 9.872242e+05 };
-  TestRunInfo pr_adlittle{"adlittle", 2.254950e+05 };
-  TestRunInfo pr_afiro{"afiro", -4.647531e+02 };
-  TestRunInfo pr_etamacro{"etamacro", 9.872242e+05 };
+  TestRunInfo pr_80bau3b{"80bau3b", 9.872242e+05};
+  TestRunInfo pr_adlittle{"adlittle", 2.254950e+05};
+  TestRunInfo pr_afiro{"afiro", -4.647531e+02};
+  TestRunInfo pr_etamacro{"etamacro", -7.55715231e+02};
 
   std::vector<TestRunInfo> problems;
   problems.push_back(pr_25fv47);
@@ -89,12 +92,20 @@ void testProblems() {
       }
 
       // Making sure presolve is on (default).
-      highs.setHighsOptionValue("presolve", "on");
+      highs.setOptionValue("presolve", "on");
+      auto start = std::chrono::steady_clock::now();
+
       HighsStatus run_status = highs.run();
+      auto end = std::chrono::steady_clock::now();
+
+      std::cout << "Elapsed time in milliseconds: "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+              << " sec, ";
 
       if (run_status == HighsStatus::kOk) {
         // Load TestRunInfo
         loadAndCheckTestRunInfo(highs, test_run);
+        test_run.time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // output main stats
         printInfo(test_run, false);
@@ -123,7 +134,7 @@ void linkComponent() {
   return;
 }
 
-}  // namespace test_presolve
+}  // namespace test
 }  // namespace scaffold
 
 #endif
