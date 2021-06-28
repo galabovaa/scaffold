@@ -15,8 +15,8 @@
 namespace scaffold {
 namespace test {
 
-const std::string kFolder = "/home/s1131817/test-problems/mps_da/";
-// const std::string kFolder ="/Users/mac/test_pr/mps_da/";
+// const std::string kFolder = "/home/s1131817/test-problems/mps_da/";
+const std::string kFolder ="/Users/mac/test_pr/mps_da/";
 
 struct TestRunInfo {
   TestRunInfo(std::string xname, double x_optimal_obj)
