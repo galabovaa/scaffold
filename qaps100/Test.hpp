@@ -3,43 +3,36 @@
 #ifndef TEST_PRESOLVE_HPP_
 #define TEST_PRESOLVE_HPP_
 
+#include <chrono>
+#include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 #include "Highs.h"
 #include "ScaffoldMethods.hpp"
-#include "presolve/PresolveComponent.h"
-#include "util/HighsTimer.h"
 
 namespace scaffold {
-namespace test_presolve {
+namespace test {
 
-const std::string kFolder = std::string(HIGHS_DIR) + "/component_test/mps/";
+// const std::string kFolder = "/home/s1131817/test-problems/mps_da/";
+const std::string kFolder ="/Users/mac/test_pr/mps_da/";
 
 struct TestRunInfo {
   TestRunInfo(std::string xname, double x_optimal_obj)
       : name(std::move(xname)), optimal_objective(x_optimal_obj) {}
 
-  TestRunInfo(std::string xname, double xobj, int rmr, int rmc, int rnnz)
-      : name(std::move(xname)),
-        objective(xobj),
-        x_cols(rmc),
-        x_rows(rmr),
-        x_nnz(rnnz) {}
+  TestRunInfo(std::string xname, double xobj, int time)
+      : name(std::move(xname)), objective(xobj) {
+    time = time;
+  }
 
   std::string name;
   double optimal_objective;
 
   double objective;
 
-  int x_cols;
-  int x_rows;
-  int x_nnz;
-
-  double time_total = -1;
-  double time_presolve = -1;
-  double time_solve = -1;
-  double time_postsolve = -1;
+  double time = -1;
 };
 
 // TestLp 25fv47{"25fv47", 5.501846e+03};
@@ -48,44 +41,20 @@ struct TestRunInfo {
 // const TestRunInfo 25fv47_w2("25fv47", 0, 81, 99, 304);
 // const TestRunInfo 80bau3b_w2("80bau3b", 0, 672, 292, 1279);
 
-std::string PresolveStatusToString(const HighsPresolveStatus status) {
-  switch (status) {
-    case HighsPresolveStatus::kNotPresolved:
-      return "Not Presolved";
-    case HighsPresolveStatus::kNotReduced:
-      return "NotReduced";
-    case HighsPresolveStatus::kInfeasible:
-      return "Infeasible";
-    case HighsPresolveStatus::kReduced:
-      return "Reduced";
-    case HighsPresolveStatus::kReducedToEmpty:
-      return "ReducedToEmpty";
-    case HighsPresolveStatus::kTimeout:
-      return "Timeout";
-    case HighsPresolveStatus::kNullError:
-      return "NullError";
-  }
-  return "";
-}
-
 void testInit() {
   // Print details.
-  std::cout << "Presolve library test: " << std::endl << std::endl;
+  std::cout << "Qaps100 test: " << std::endl << std::endl;
 
   return;
 }
 
 void loadAndCheckTestRunInfo(const Highs& highs, TestRunInfo& info) {
-  info.time_total = -1;
-  info.time_presolve = -1;
-  info.time_solve = -1;
-  info.time_postsolve = -1;
+  info.objective = highs.getObjectiveValue();
 }
 
 void printInfo(TestRunInfo& info, const bool desc) {
   if (desc) {
-    std::cout << "scaffold-run-test-presolve, name, optimal, obj, "
-                 "x_rows,	x_cols, x_nnz"
+    std::cout << "scaffold-run-test-qap100, name, optimal, obj, time"
               << std::endl;
   } else {
     std::cout << "scaffold-run-test-presolve, " << info.name << ", "
@@ -94,19 +63,38 @@ void printInfo(TestRunInfo& info, const bool desc) {
   }
 }
 
-void testProblems() {
-  TestRunInfo pr_25fv47("25fv47", 5.501846e+03, 99, 81, 304);
-  TestRunInfo pr_80bau3b{"80bau3b", 9.872242e+05, 292, 672, 1279};
-  TestRunInfo pr_adlittle{"adlittle", 2.254950e+05, 3, 2, 10};
-  TestRunInfo pr_afiro{"afiro", -4.647531e+02, 5, 2, 8};
-  TestRunInfo pr_etamacro{"etamacro", 9.872242e+05, 81, 161, 573};
+bool fillTestProblems(std::vector<TestRunInfo>& problems) {
+  std::ifstream file("problems.csv");
+  string content;
 
+  try {
+    while (std::getline(file, content)) {
+      std::cout << content << ' ';
+      if (content.size() > 0) {
+
+        std::string buf;                 // Have a buffer string
+        std::stringstream ss(content);       // Insert the string into a stream
+        std::vector<std::string> tokens; // Create vector to hold our words
+
+        while (getline(ss, buf, ','))
+          tokens.push_back(buf);
+
+        std::cout << "TKNS " << tokens.size() << std::endl;
+        assert(tokens.size() == 2);
+        double objective = atof(tokens[1].c_str());
+        problems.push_back(TestRunInfo{tokens[0], objective});
+      }
+    }
+  } catch (int ex) {
+    std::cout << "Exception "<< ex << std::endl;
+    return false;
+  }
+  return true;
+}
+
+void testProblems() {
   std::vector<TestRunInfo> problems;
-  problems.push_back(pr_25fv47);
-  problems.push_back(pr_80bau3b);
-  problems.push_back(pr_adlittle);
-  problems.push_back(pr_afiro);
-  problems.push_back(pr_etamacro);
+  fillTestProblems(problems);
 
   printInfo(problems[0], true);
 
@@ -126,12 +114,24 @@ void testProblems() {
       }
 
       // Making sure presolve is on (default).
-      highs.setHighsOptionValue("presolve", "on");
+      highs.setOptionValue("presolve", "on");
+      auto start = std::chrono::steady_clock::now();
+
       HighsStatus run_status = highs.run();
+      auto end = std::chrono::steady_clock::now();
+
+      std::cout << "Elapsed time in milliseconds: "
+                << std::chrono::duration_cast<std::chrono::milliseconds>(end -
+                                                                         start)
+                       .count()
+                << " sec, ";
 
       if (run_status == HighsStatus::kOk) {
         // Load TestRunInfo
         loadAndCheckTestRunInfo(highs, test_run);
+        test_run.time =
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+                .count();
 
         // output main stats
         printInfo(test_run, false);
@@ -149,18 +149,18 @@ void testProblems() {
   return;
 }
 
-void testPresolve() {
+void test() {
   testInit();
   testProblems();
 }
 
 void linkComponent() {
-  std::cout << "Presolve library link component" << std::endl;
-  testPresolve();
+  std::cout << "link component" << std::endl;
+  test();
   return;
 }
 
-}  // namespace test_presolve
+}  // namespace test
 }  // namespace scaffold
 
 #endif

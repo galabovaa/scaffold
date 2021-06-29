@@ -1,8 +1,7 @@
+
 #include <iostream>
 
-// #include "../component_test/TestPresolve.hpp"
-// Enable for dev-presolve
-#include "../dev_presolve/DevPresolveMethods.hpp"
+#include "../qaps100/Test.hpp"
 #include "../scaffold/ScaffoldMethods.hpp"
 
 int main(int argc, char* argv[]) {
@@ -10,11 +9,7 @@ int main(int argc, char* argv[]) {
   scaffold::ScaffoldUtils::scaffoldHello();
 
   // Call test on presolve component.
-  // scaffold::test_presolve::linkComponent();
-
-  // Enable for dev-presolve
-  // Call test on presolve component.
-  scaffold::dev_presolve::devPresolveHello();
+  scaffold::test::linkComponent();
 
   // Dev code should be compiled and used with a target specified in its
   // dev-*/CMakeLists.txt.
