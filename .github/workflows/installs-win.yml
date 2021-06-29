@@ -46,7 +46,7 @@ jobs:
         cd $HOME/HiGHS/build
         ls
         cmake -DFAST_BUILD=ON -DCMAKE_INSTALL_PREFIX=. ..  
-        cmake --build . config Release --parallel
+        cmake --build . --config Release --parallel
 
     - name: Test
       # Execute tests defined by the CMake configuration.
@@ -62,7 +62,7 @@ jobs:
         mkdir build_non_fast
         cd build_non_fast
         cmake -DCMAKE_INSTALL_PREFIX=. ..
-        cmake --build . config Release --parallel
+        cmake --build . --config Release --parallel
 
     - name: Test
       # Execute tests defined by the CMake configuration.
