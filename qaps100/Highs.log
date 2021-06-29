@@ -1,0 +1,31 @@
+
+Presolving model
+703 rows, 5347 cols, 19727 nonzeros
+703 rows, 5347 cols, 19727 nonzeros
+Presolve : Reductions: rows 703(-395); columns 5347(-3058); elements 19727(-17747)
+Solving the presolved LP
+WARNING: Number of OMP threads available = 0 < 1 = Number of HiGHS threads to be used: Parallel performance will be less than anticipated
+Using EKK dual simplex solver - serial
+       Iteration        Objective     Infeasibilities num(sum)
+DuPh2          0    -1.3554329222e-07 Pr: 81(3.31999)
+DuPh2         50     6.9683958013e-02 Pr: 267(10.5155)
+DuPh2        100     3.8372925474e-01 Pr: 344(49.3609)
+DuPh2        150     3.8418703268e-01 Pr: 391(270.8)
+DuPh2        200     3.8859412103e-01 Pr: 379(1552.65); Du: 0(9.20171e-08)
+DuPh2        250     6.9561616930e-01 Pr: 379(19.5317); Du: 0(9.20171e-08)
+DuPh2        300     7.0225086138e-01 Pr: 365(7.59758); Du: 0(1.0427e-07)
+DuPh2        350     7.9813974936e-01 Pr: 319(18.2868); Du: 0(1.0427e-07)
+DuPh2        400     8.3806774441e-01 Pr: 300(44.8898); Du: 0(1.0427e-07)
+DuPh2        450     1.0092987836e+00 Pr: 315(70.539); Du: 0(1.2253e-08)
+DuPh2        500     1.0708816653e+00 Pr: 261(10.4625); Du: 0(1.2253e-08)
+DuPh2        550     1.0909589849e+00 Pr: 241(11.4587); Du: 0(1.0427e-07)
+DuPh2        603     1.1265200961e+00 Pr: 231(20.4649); Du: 0(1.0427e-07)
+DuPh2        654     1.1587028966e+00 Pr: 177(13.427); Du: 0(1.0427e-07)
+DuPh2        704     1.1731287968e+00 Pr: 171(5.32814); Du: 0(1.0427e-07)
+DuPh2        758     1.2499602399e+00 Pr: 109(1.3233); Du: 0(1.0427e-07)
+DuPh2        817     1.2817262555e+00 Pr: 87(2.26727); Du: 0(1.0427e-07)
+DuPh2        870     1.2888976636e+00 Pr: 54(1.25985); Du: 0(1.0427e-07)
+DuPh2        943     1.3045363530e+00 Pr: 6(0.0285865); Du: 0(1.0427e-07)
+DuPh2        954     1.3045685027e+00 Pr: 0(0); Du: 0(1.0427e-07)
+DuPh2        954     1.3044763331e+00 Pr: 0(0); Du: 0(3.33067e-16)
+Solving the original LP from the solution after postsolve
