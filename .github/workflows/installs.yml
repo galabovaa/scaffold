@@ -70,4 +70,7 @@ jobs:
       run: |
         cd $HOME/HiGHS/build_non_fast
         ctest
-        cmake --install .
+
+
+    # cmake --install .
+    # does not work on linux with FAST_BUILD=OFF
