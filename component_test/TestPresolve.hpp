@@ -80,14 +80,6 @@ void testInit() {
 }
 
 void loadAndCheckTestRunInfo(const Highs& highs, TestRunInfo& info) {
-  int row, col, nnz;
-  highs.getPresolveReductionCounts(row, col, nnz);
-
-  if (info.x_rows != row || info.x_cols != col || info.x_nnz != nnz) {
-    std::cout << "reductions change !!!";
-    exit(2);
-  }
-
   info.time_total = -1;
   info.time_presolve = -1;
   info.time_solve = -1;
@@ -102,7 +94,6 @@ void printInfo(TestRunInfo& info, const bool desc) {
   } else {
     std::cout << "scaffold-run-test-presolve, " << info.name << ", "
               << info.optimal_objective << ", " << info.objective << ", "
-              << info.x_rows << ", " << info.x_cols << ", " << info.x_nnz
               << std::endl;
   }
 }
