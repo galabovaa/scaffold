@@ -54,7 +54,7 @@ jobs:
       run: |
         cd $HOME/HiGHS/build_dev
         ctest
-        cmake --install 
+        cmake --install .
 
     - name: Default Build Pre R (non-fast)
       run: |
@@ -70,4 +70,4 @@ jobs:
       run: |
         cd $HOME/HiGHS/build_non_fast
         ctest
-        cmake --install 
+        cmake --install .
