@@ -50,23 +50,19 @@ struct TestRunInfo {
 
 std::string PresolveStatusToString(const HighsPresolveStatus status) {
   switch (status) {
-    case HighsPresolveStatus::NotPresolved:
+    case HighsPresolveStatus::kNotPresolved:
       return "Not Presolved";
-    case HighsPresolveStatus::NotReduced:
+    case HighsPresolveStatus::kNotReduced:
       return "NotReduced";
-    case HighsPresolveStatus::Infeasible:
+    case HighsPresolveStatus::kInfeasible:
       return "Infeasible";
-    case HighsPresolveStatus::Unbounded:
-      return "Unbounded";
-    case HighsPresolveStatus::Empty:
-      return "Empty";
-    case HighsPresolveStatus::Reduced:
+    case HighsPresolveStatus::kReduced:
       return "Reduced";
-    case HighsPresolveStatus::ReducedToEmpty:
+    case HighsPresolveStatus::kReducedToEmpty:
       return "ReducedToEmpty";
-    case HighsPresolveStatus::Timeout:
+    case HighsPresolveStatus::kTimeout:
       return "Timeout";
-    case HighsPresolveStatus::NullError:
+    case HighsPresolveStatus::kNullError:
       return "NullError";
   }
   return "";
@@ -121,7 +117,7 @@ void testProblems() {
       Highs highs;
       HighsStatus highs_status = highs.readModel(file);
 
-      if (highs_status != HighsStatus::OK) {
+      if (highs_status != HighsStatus::kOk) {
         std::cout << "TestPresolve:: Highs readModel returned Warning or Error "
                      "on problem: "
                   << test_run.name << std::endl;
@@ -133,7 +129,7 @@ void testProblems() {
       highs.setHighsOptionValue("presolve", "on");
       HighsStatus run_status = highs.run();
 
-      if (run_status == HighsStatus::OK) {
+      if (run_status == HighsStatus::kOk) {
         // Load TestRunInfo
         loadAndCheckTestRunInfo(highs, test_run);
 
