@@ -60,7 +60,6 @@ jobs:
         cd $HOME/HiGHS
         rm -rf $HOME/HiGHS/scaffold/
         rm -rf $HOME/HiGHS/component_test/
-        rm -rf $HOME/HiGHS/dev_presolve/
         mv ${{github.workspace}}/scaffold/ .
         printf "\nadd_subdirectory(scaffold)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_dev
@@ -83,8 +82,6 @@ jobs:
     - name: Dev Build
       run: |
         cd $HOME/HiGHS
-        mv ${{github.workspace}}/dev_presolve/ .
-        printf "\nadd_subdirectory(dev_presolve)\n" | tee -a $HOME/HiGHS/CMakeLists.txt
         cd build_dev
         cmake -DFAST_BUILD=ON ..
         cmake --build .

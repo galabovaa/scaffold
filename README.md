@@ -33,9 +33,6 @@ The division of folders in scaffold is such that it allows for linking dev code 
   contains scaffold utilities and defines the executable which will run all component tests we want to run on HiGHS
   dev executables are defined in their own scaffold root subdirecties
 
-
-dev-presolve/ is an example of use of the scaffold for development. It is an example of a folder which can exist locally (or on any git branch of this repo) which can be copied into HiGHS for development or test of that component (along with the scaffold/ dir).
-
 ### Performance Log
 
 Scaffold can be set up to keep a record of the performance on HiGHS on various test sets.

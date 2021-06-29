@@ -63,31 +63,3 @@ ctest | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
 cp ${HIGHS_RUN_DIR}/build/Testing/Temporary/LastTest.log \
     ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_HS.log
 cd ${TMP_DIR}
-grep dev-presolve \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_HS.log > \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_HS_reduction_counts.log
-
-# Then Scaffold and DevPresolve
-cp -r ${SCAFFOLD_DIR}/dev_presolve ${HIGHS_RUN_DIR}
-rm ${HIGHS_RUN_DIR}/scaffold/ScaffoldMain.cpp
-
-cp ${SCAFFOLD_DIR}/dev_presolve/DevScaffoldMain.cpp ${HIGHS_RUN_DIR}/scaffold/ScaffoldMain.cpp
-
-# Had issue with linking of CMake when using add_subdir.
-# More modern CMake approach should fix that: added FAST_BUILD
-echo "add_subdirectory(dev_presolve)" | tee -a ${HIGHS_RUN_DIR}/CMakeLists.txt
-
-cd ${HIGHS_RUN_DIR}/build
-cmake .. | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
-
-cmake --build --parallel . | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
-make -j | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
-ctest | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
-
-# Save log.
-cp ${HIGHS_RUN_DIR}/build/Testing/Temporary/LastTest.log \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_presolve.log
-cd ${TMP_DIR}
-grep dev-presolve \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_presolve.log > \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_dev_presolve_reduction_counts.log

@@ -70,9 +70,6 @@ ctest | tee -a ${TMP_DIR}/${RUN_DIR}/build.log
 cp ${HIGHS_RUN_DIR}/build/Testing/Temporary/LastTest.log \
     ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_TP.log
 cd ${TMP_DIR}
-grep dev-presolve \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_TP.log > \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_ctest_reduction_counts.log
 
 # Install HiGHS.
 cd ${RUN_DIR}
@@ -85,12 +82,8 @@ for file in ${TEST_DIR}/netlib/*.mps; do
     ${TMP_DIR}/${RUN_DIR}/install/bin/highs --time_limit=3000 ${file} |
         tee -a ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_netlib.log
 done
-grep dev-presolve ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_netlib.log > \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_netlib_reduction_counts.log
 
 # Smaller instance.
 ${TMP_DIR}/${RUN_DIR}/install/bin/highs --time_limit=10000 \
     ${TEST_DIR}/small.mps | tee -a \
     ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_small.log
-grep dev-presolve ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_small.log > \
-    ${TMP_DIR}/${RUN_DIR}/${RUN_DIR}_small_reduction_counts.log

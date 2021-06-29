@@ -94,9 +94,6 @@ jobs:
     - name: Dev Build
       run: |
         cd $HOME/HiGHS
-        cp -r ${{github.workspace}}/dev_presolve/ .
-        rm -f ./scaffold/ScaffoldMain.cpp
-        mv ./dev_presolve/DevScaffoldMain.cpp ./scaffold/ScaffoldMain.cpp
         cd build_fast
         cmake -DFAST_BUILD=ON ..
         cmake --build .
